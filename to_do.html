@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        * {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #ff0000;
+}
+
+#add-task-form {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+#new-task-input {
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f2f2f2;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.task-item:last-child {
+  margin-bottom: 0;
+}
+
+.task-text {
+  flex-grow: 1;
+  margin-left: 10px;
+}
+
+.delete-button {
+  background-color: #ff0000;
+  color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #cc0000;
+}
+
+@media (max-width: 600px) {
+  #new-task-input {
+    width: 100%;
+  }
+  
+  .task-item {
+    flex-direction: column;
+  }
+  
+  .task-text {
+    margin: 10px 0;
+  }
+}
+    </style>
+  </head>
+  <body>
+    <h1>To-Do List</h1>
+    <form id="add-task-form">
+      <input type="text" id="new-task-input" placeholder="Add a new task...">
+      <button type="submit">Add Task</button>
+    </form>
+    <ul id="task-list"></ul>
+    <script>
+        const form = document.getElementById('add-task-form');
+const taskList = document.getElementById('task-list');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const newTaskInput = document.getElementById('new-task-input');
+  const newTaskText = newTaskInput.value.trim();
+
+  if (newTaskText.length > 0) {
+    const newTaskItem = document.createElement('li');
+    newTaskItem.classList.add('task-item');
+
+    const taskText = document.createElement('span');
+    taskText.classList.add('task-text');
+    taskText.textContent = newTaskText;
+    newTaskItem.appendChild(taskText);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('delete-button');
+    deleteButton.textContent = 'Delete';
+    newTaskItem.appendChild(deleteButton);
+
+    taskList.appendChild(newTaskItem);
+
+    newTaskInput.value = '';
+  }
+});
+
+taskList.addEventListener('click', (e) => {
+  if (e.target.classList.contains('delete-button')) {
+    const taskItem = e.target.parentElement;
+    taskItem.remove();
+  }
+});
+    </script>
+  </body>
+</html>
